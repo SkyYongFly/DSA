@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class TwoNumberSum {
     public static void main(String[] args) {
         int[] nums = new int[]{2, 7, 11, 15};
-        int[] result = twoSum3(nums, 18);
+        int[] result = twoSum3(nums, 9);
 
         if(null != result){
             for(int i : result){
@@ -78,7 +78,7 @@ public class TwoNumberSum {
         for(int i = 0; i < nums.length; i++){
             int next = target - nums[i];
 
-            if(map.containsKey(next)){
+            if(i > 0 && map.containsKey(next)){
                 return new int[]{i, map.get(next)};
             }
 
