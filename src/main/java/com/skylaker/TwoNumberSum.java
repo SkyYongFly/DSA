@@ -15,8 +15,8 @@ import java.util.HashMap;
  */
 public class TwoNumberSum {
     public static void main(String[] args) {
-        int[] nums = new int[]{3, 2, 3};
-        int[] result = twoSum2(nums, 6);
+        int[] nums = new int[]{2, 7, 11, 15};
+        int[] result = twoSum3(nums, 18);
 
         if(null != result){
             for(int i : result){
@@ -74,14 +74,15 @@ public class TwoNumberSum {
         }
 
         // 先将数组元素存入Hash结构中,key为元素值，value为数组索引
-        HashMap<String, Integer> map = new HashMap<String, Integer>(nums.length);
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>(nums.length);
         for(int i = 0; i < nums.length; i++){
-            map.put(String.valueOf(nums[i]), i);
+            int next = target - nums[i];
 
-            // 需要排除当前元素，例如会出现 {3, 2 , 4} 目标值为6，而 3 + 3 = 6
-            if(i > 0 && map.containsKey(String.valueOf(target - nums[i])) && i != map.get(target - nums[i])){
-                return new int[]{i, map.get(target - nums[i])};
+            if(map.containsKey(next)){
+                return new int[]{i, map.get(next)};
             }
+
+            map.put(nums[i], i);
         }
 
         return null;
