@@ -1,4 +1,4 @@
-package com.skylaker;
+package com.skylaker.array;
 
 import java.util.HashMap;
 
