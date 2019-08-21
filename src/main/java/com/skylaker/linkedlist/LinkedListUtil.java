@@ -5,7 +5,7 @@ package com.skylaker.linkedlist;
  * @author skylaker2019@163.com
  * @version V1.0 2019/8/21 9:37 PM
  */
-public class LinkedListUtil <T>{
+public class LinkedListUtil{
     /**
      * 根据指定数组生成单链表
      */
