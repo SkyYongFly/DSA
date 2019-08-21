@@ -8,28 +8,13 @@ package com.skylaker.linkedlist;
  */
 public class SinglyLinkedList {
     /**
-     * 链表结点定义
-     */
-    static class Node<E> {
-        // 结点保存对象
-        E data;
-        // 后继节点
-        Node<E> next;
-
-        Node(E data, Node<E> next){
-            this.data = data;
-            this.next = next;
-        }
-
-        E getData(){
-            return this.data;
-        }
-    }
-
-    /**
      * 定义链表头节点，这里定义当前链表保存的值都是字符串
      */
     private Node<String> head = null;
+
+    public Node getHead(){
+        return head;
+    }
 
     /**
      * 查找指定值的节点
@@ -311,7 +296,6 @@ public class SinglyLinkedList {
         }
         System.out.println();
     }
-
 
     /**
      * 判断字符串是否为空
