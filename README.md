@@ -24,7 +24,7 @@
 一个考量效率和资源消耗的方法，这就是复杂度分析方法，需要考虑：
 时间复杂度、空间复杂度。
 ######  3) 基本内容
-![913e0ababe43a2d57267df5c5f0832a7](数据结构与算法.resources/EDC38ABB-92D7-4D4E-90F4-A887C83C47F4.jpg)
+![913e0ababe43a2d57267df5c5f0832a7](README.resources/EDC38ABB-92D7-4D4E-90F4-A887C83C47F4.jpg)
 ######  4）重点内容
 * 10 个数据结构：数组、链表、栈、队列、散列表、二叉树、堆、跳表、图、Trie 树；
 * 10 个算法：递归、排序、二分查找、搜索、哈希算法、贪心算法、分治算法、回溯算法、动态规划、字符串匹配算法。
@@ -164,7 +164,7 @@ T(n) = O(f(n)) * O(f(m)) = O(n) * O(m) = O(n * m)
 
 其中像指数阶 O(2^n) 和阶乘阶 O(n!) 属于非多项式阶，其它的属于多项式阶，按照函数的特性我们看下几种复杂度的函数变化趋势：
 
-![5b5ad09c19cfa13e44488e4a64466033](数据结构与算法.resources/58C14496-5BEC-446C-9AD6-770D876D62F3.png)
+![5b5ad09c19cfa13e44488e4a64466033](README.resources/58C14496-5BEC-446C-9AD6-770D876D62F3.png)
 
 可以看出n的k次阶、指数阶、阶乘阶这些都是随着n的增大急速增长，这个在实际代码中意味着需要消耗着更多的时间，即程序效率低。
 
@@ -303,7 +303,7 @@ void find(int[] array, int val){
 
 图示：例如我们申请了一个大小空间为7的字符数组（Java中），假设内存分配给数组的初始地址为100，每个字符占两字节
 
-![73f9f2c2f715f9dc673db50b1cdf632f](数据结构与算法.resources/44E0F614-657D-4E6D-BCA2-1B2BA0F9A678.png)
+![73f9f2c2f715f9dc673db50b1cdf632f](README.resources/44E0F614-657D-4E6D-BCA2-1B2BA0F9A678.png)
 
 寻址公式：`第i+1位地址 = 首地址 + i * 每个元素大小`
 例如上例第4个元素地址就是 100 + 3*2 = 106
@@ -320,11 +320,11 @@ a. 将某个元素插入到数组中的第K个位置：
 最差 -- 数组开头位置，因为涉及后续元素往后移动 O(n)
 平均 -- O(n)
 
-![1f88d9da26ff09f5dea763377fca5355](数据结构与算法.resources/7E33CC2A-8332-4228-9672-EC0BE06B97AE.png)
+![1f88d9da26ff09f5dea763377fca5355](README.resources/7E33CC2A-8332-4228-9672-EC0BE06B97AE.png)
 
 优化插入操作：将原位置元素放入末尾，原位置插入目标元素，时间复杂度O(1)
 
-![6e73e53fc29eb2e1312fa46be898d0bb](数据结构与算法.resources/17167BB6-0F59-4B23-8B73-018B23527A0A.png)
+![6e73e53fc29eb2e1312fa46be898d0bb](README.resources/17167BB6-0F59-4B23-8B73-018B23527A0A.png)
 
 删除操作：删除第K位的元素，为保证内存连续性也要搬移数据
 最好 -- 直接删除末尾 O(1)
@@ -358,7 +358,7 @@ Java语言具有显式越界检查，避免越界问题。
 
 定义：通过指针将零散的（不一定非连续）内存块串联在一起的数据结构。
 
-![899c488b3a983fb660dcabf3fe62f499](数据结构与算法.resources/0DE45C67-4D2C-47DB-9D16-7FE195928703.png)
+![899c488b3a983fb660dcabf3fe62f499](README.resources/0DE45C67-4D2C-47DB-9D16-7FE195928703.png)
 
 含义解读：
 
@@ -380,7 +380,7 @@ Java语言具有显式越界检查，避免越界问题。
 
 * 插入节点
 
-![ce9916d3d3ddc946ac1e0938b896eb7d](数据结构与算法.resources/9F431A24-4583-493F-A0FE-95342A818973.png)
+![ce9916d3d3ddc946ac1e0938b896eb7d](README.resources/9F431A24-4583-493F-A0FE-95342A818973.png)
 
 单纯的插入操作本身：时间复杂度 O(1)
 
@@ -392,7 +392,7 @@ Java语言具有显式越界检查，避免越界问题。
 
 * 删除节点
 
-![aac3e3c4064f80cccdd0398f58a63baa](数据结构与算法.resources/EF9AA38A-49E3-4116-9731-C37FB1544940.png)
+![aac3e3c4064f80cccdd0398f58a63baa](README.resources/EF9AA38A-49E3-4116-9731-C37FB1544940.png)
 
 单纯的删除操作本身：时间复杂度 O(1)
 
@@ -408,13 +408,13 @@ Java语言具有显式越界检查，避免越界问题。
 
 循环链表即在单链表的基础上，尾节点指向头节点：
 
-![966a3c671283fbda028335a7984b04f4](数据结构与算法.resources/A33BB7C0-2FBF-4149-9207-90C77739DBF3.png)
+![966a3c671283fbda028335a7984b04f4](README.resources/A33BB7C0-2FBF-4149-9207-90C77739DBF3.png)
 
 ###### 3.2.4 双向链表
 
 后继指针next指向下一个节点，前驱指针prev指向前面的节点
 
-![fcfebcc26f1f11817052cc3bd207a9f1](数据结构与算法.resources/90C1718D-7FB6-4B8A-B830-6905AF0FBD8F.png)
+![fcfebcc26f1f11817052cc3bd207a9f1](README.resources/90C1718D-7FB6-4B8A-B830-6905AF0FBD8F.png)
 
 相比单链表需要更多的存储空间；但是支持前后双向遍历，支持O(1)时间复杂度找到前驱节点
 
@@ -442,7 +442,7 @@ Java语言具有显式越界检查，避免越界问题。
 
 ###### 3.2.5 双向循环链表
 
-![ae839c951c4942c60d7c9edcfdb7a203](数据结构与算法.resources/CDE14078-C41D-42FE-9D03-56B63B124730.png)
+![ae839c951c4942c60d7c9edcfdb7a203](README.resources/CDE14078-C41D-42FE-9D03-56B63B124730.png)
 
 ###### 3.2.6 如何写好链表代码
 
@@ -452,13 +452,13 @@ Java语言具有显式越界检查，避免越界问题。
 
 例如链表中某个节点，以单链表来说，需要两个内存块，一个保存当前节点数据，一个为next指针，即保存了下一个节点的内存地址；
 
-![7022ff8262661b300e6e29d74eb8426a](数据结构与算法.resources/53712675-9AC2-4C27-82E3-973E62FE4E08.png)
+![7022ff8262661b300e6e29d74eb8426a](README.resources/53712675-9AC2-4C27-82E3-973E62FE4E08.png)
 
 * 警惕指针丢失和内存泄露
 
 在进行例如插入链表节点时，需要注意指针指向的顺序，例如：
 
-![a8fafa12f31eee8519e18652d55d7525](数据结构与算法.resources/FFFFEBC9-7EFB-4154-82E8-D2D730BAFD3A.png)
+![a8fafa12f31eee8519e18652d55d7525](README.resources/FFFFEBC9-7EFB-4154-82E8-D2D730BAFD3A.png)
 
 如果这样操作：
 
@@ -486,7 +486,7 @@ C语言类似的需要手动释放删除的节点内存；而Java这种自动内
 
 带头链表：
 
-![80f69a419447da0938e815d79091c7b4](数据结构与算法.resources/F7402F23-77FA-4860-93EA-7C1187FB074D.png)
+![80f69a419447da0938e815d79091c7b4](README.resources/F7402F23-77FA-4860-93EA-7C1187FB074D.png)
 
 * 留意边界条件处理
 
@@ -501,3 +501,97 @@ C语言类似的需要手动释放删除的节点内存；而Java这种自动内
 Talk is cheap, show me your code !
 
 ###### 3.2.6 链表代码实战
+
+见代码目录：
+
+[https://github.com/SkyYongFly/DSA/tree/master/src/main/java/com/skylaker/linkedlist](https://github.com/SkyYongFly/DSA/tree/master/src/main/java/com/skylaker/linkedlist)
+
+##### 3.3 栈
+###### 3.3.1 基本定义
+
+先进后出，后出先进；是一种操作受限的线性表；只允许一端进行操作；
+
+栈这种结构本质上是对数组、链表的逻辑化封装，底层实现还是要基于数组或者链表本身：
+
+![163decc3796cfd51fe4bfd53ded7b5be](README.resources/5F2DF438-D1D3-49BA-9A38-D08806E9A70A.png)
+
+###### 3.3.2 代码实现
+
+* 基于数组实现的栈
+
+```
+package com.skylaker.stack;
+
+/**
+ * 基于数组的栈
+ * @author skylaker2019@163.com
+ * @version V1.0 2019/8/21 11:14 PM
+ */
+public class StackBasedOnArray {
+    // 内部维护一个数组结构
+    private String[] arr;
+    // 栈最大大小，即数组的设置大小
+    private int max;
+    // 栈中已有元素个数
+    private int num;
+
+    /**
+     * 初始化栈，即初始化内部的数组
+     * @param max
+     */
+    public StackBasedOnArray(int max){
+        this.arr = new String[max];
+        this.max = max;
+        this.num = 0;
+    }
+
+    /**
+     * 入栈操作
+     * @return 成功：true ；失败：false
+     */
+    public boolean push(String item){
+        if(num == max){
+            // 已有元素个数达到最大数量限制，则说明栈已经满
+            return false;
+        }
+
+        arr[num] = item;
+        num++;
+
+        return true;
+    }
+
+    /**
+     * 出栈操作
+     */
+    public String pop(){
+        if(0 == num){
+            // 已有元素个数为0则说明栈是空的
+            return null;
+        }
+
+        // 从最上面取值
+        String item = arr[num-1];
+        num--;
+
+        return item;
+    }
+}
+```
+
+测试数据：
+
+![56d84b11d557776eb102f64ff1b1bbee](README.resources/4261365A-5292-43A1-A7D1-ACEA0B304BBE.png)
+
+输出：
+
+![0254e96eca6fa7744ba99d164695f06b](README.resources/670399E5-5E99-4DEE-B0DD-7176499B342A.png)
+
+时间复杂度：O(1)
+空间复杂度：O(1)
+
+* 支持动态扩容的栈
+
+如果底层是数组，相当于数组空间不够时候自动扩容，可以再申请一个两倍大小的数组，然后将原有数组复制过去；
+
+如果底层是链表，则本身就支持动态扩容；
