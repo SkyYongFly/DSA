@@ -686,3 +686,92 @@ public class StackBasedOnLinkedList {
 如果底层是数组，相当于数组空间不够时候自动扩容，可以再申请一个两倍大小的数组，然后将原有数组复制过去；
 
 如果底层是链表，则本身就支持动态扩容；
+
+##### 3.4 队列
+###### 3.4.1 基本定义
+一种操作受限的线性表数据结构；和栈一样，也是一种逻辑上抽象的数据结构，本质上可以用数组和链表两种基本数据结构实现；
+
+最基本的两个操作：入队 enqueue()  队尾放一个数据 、出队 dequeue() 队列头部取一个元素；
+
+基本特性：先进先出；后进后出；
+
+![04112728c1c574324a254937d607260d](README.resources/C9EE4915-CC95-454B-90EB-54109CB24B3C.png)
+
+###### 3.4.2 顺序队列
+顺序队列：用数组实现的队列
+
+```
+package com.skylaker.queue;
+
+/**
+ * 顺序队列
+ * @author skylaker2019@163.com
+ * @version V1.0 2019/9/9 10:04 PM
+ */
+public class ArrayQueue {
+    // 内部数组
+    private String[] items;
+    // 数组大小：n，即队列大小
+    private int n = 0;
+    // 队头下标：指向第一个实际元素
+    private int head = 0;
+    // 队尾下标：指向最后一个元素的后一节点，即入队元素要保存进的位置
+    private int tail = 0;
+
+    /**
+     * 申请一个大小为 m 的数组
+     * @param m
+     */
+    public ArrayQueue(int m){
+        items = new String[m];
+        n = m;
+    }
+
+    /**
+     * 入队操作（不做判空操作，即允许存储空数据）
+     * @param item 入队元素
+     * @return 成功 true；失败 false
+     */
+    public boolean enqueue(String item){
+        // 判断队列是否已经满
+        if(tail == n){
+            return false;
+        }
+
+        items[tail] = item;
+        tail++;
+        return true;
+    }
+
+    /**
+     * 出队操作
+     * @return
+     */
+    public String dequeue(){
+        // 判断队列是否为空
+        if(head == tail){
+            return null;
+        }
+
+        String item = items[head];
+        head++;
+        return item;
+    }
+}
+```
+
+a、b、c、d、e 元素依次入队后，head指向0位置，tail指向5位置：
+![5f1ac76594c283609b490fcb4496b20f](README.resources/30386EBC-B432-476F-879A-38AA4005AF03.png)
+
+两次出队后，队头指向2位置：
+![6b9de29dfb42f4113d47194fbc4a76cb](README.resources/EF7574ED-1F5A-4218-8023-8DE078AABACC.png)
+
+产生问题：例如上面的队列，如果继续入队元素，当tail=8时候：
+![eb76e1fb616f65c2ab6747c9ce42e156](README.resources/597F3511-17D4-4618-8603-AD29514A01A2.png)
+这个时候继续入队，但是队尾已经没有空间了，无法再入队新插入元素，可是队列头明明是有空间的；
+
+解决这个问题，可以在入队的时候进行元素搬移操作，例如上面队列可以后续元素都往前搬移两个位置；但是并不是每次入队都需要，只需要在队尾已经无法插入元素时再迁移元素，降低时间复杂度；
+
+
+###### 3.4.3 链式队列
+链式队列：用链表实现的队列
