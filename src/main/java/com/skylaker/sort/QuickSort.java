@@ -58,9 +58,12 @@ public class QuickSort {
 
         for(int j = start; j <= end - 1; j++){
             if(a[j] < a[point]){
-                int temp = a[i];
-                a[i] = a[j];
-                a[j] = temp;
+                // 如果在相同位置就没必要交换了
+                if(i != j) {
+                    int temp = a[i];
+                    a[i] = a[j];
+                    a[j] = temp;
+                }
 
                 i++;
             }
