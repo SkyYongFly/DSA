@@ -8,8 +8,8 @@ package com.skylaker.search;
 public class BinarySearch {
     public static void main(String[] args) {
         int[] a = {1, 2, 11, 18, 23, 32, 45, 56, 66, 72, 80, 99, 198};
-//        System.out.println(circleSearch(a, a.length, 198));
-        System.out.println(recursionSearch(a,0, a.length - 1, 198));
+        System.out.println(circleSearch(a, a.length, 1198));
+//        System.out.println(recursionSearch(a,0, a.length - 1, 1198));
     }
 
 
@@ -54,6 +54,10 @@ public class BinarySearch {
      * @return 目标元素所在位置
      */
     public static int recursionSearch(int[] array, int start, int end,  int value){
+        if(start > end){
+            return - 1;
+        }
+
         int middle = start + ((end - start) >> 2);
 
         if(array[middle] == value){
