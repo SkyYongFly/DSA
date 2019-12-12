@@ -1733,4 +1733,144 @@ O(n)
 
   D. 适用于静态的不太经常变的数据，较少的排序，多次查找；而经常变的数据需要经常排序消耗时间；
 
-  
+#### 3.7.1 二分查找（Binary Search）—— 有重复元素
+
+##### 3.7.1.1 查找第一个值等于给定值的元素
+
+```java
+/**
+     * 查找第一个值等于给定值的元素
+     *
+     * @param array 目标数组
+     * @param n     数组大小
+     * @param value 要查找的值
+     * @return 目标元素所在位置
+     */
+    public static int searchFirstEqual(int[] array, int n, int value){
+        int low = 0;
+        int high = n - 1;
+
+        while(low <= high){
+            int middle = low + ((high - low) >> 2);
+
+            if(array[middle] == value){
+                if(middle == 0 || array[middle - 1] < value){
+                    // 如果元素是第一个元素、或者说当前值等于目标值，并且前一个元素值小于当前值，
+                    // 因为数组已经有序，那么前面的元素肯定不会有等于当前值的元素，即当前元素就是第一个等于目标值的元素
+                    return middle;
+                } else {
+                    // 当前元素等于目标元素，但是前面紧挨着肯定还有相同元素，所以需要在之前的区间继续查找
+                    high = middle - 1;
+                }
+            } else if(array[middle] > value){
+                high = middle - 1;
+            } else {
+                low = middle + 1;
+            }
+        }
+
+        return -1;
+    }
+```
+
+##### 3.7.1.2 查找最后一个值等于给定值的元素
+
+```java
+/**
+     * 查找最后一个值等于给定值的元素
+     *
+     * @param array 目标数组
+     * @param n     数组大小
+     * @param value 要查找的值
+     * @return 目标元素所在位置
+     */
+    public static int searchLastEqual(int[] array, int n, int value){
+        int low = 0;
+        int high = n - 1;
+
+        while(low <= high){
+            int middle = low + ((high - low) >> 2);
+
+            if(array[middle] == value){
+                if(middle == n - 1 || array[middle + 1] > value){
+                    return middle;
+                } else {
+                    low = middle + 1;
+                }
+            } else if(array[middle] > value){
+                high = middle - 1;
+            } else {
+                low = middle + 1;
+            }
+        }
+
+        return -1;
+    }
+```
+
+##### 3.7.1.3 查找第一个值大于等于给定值的元素
+
+```java
+/**
+     * 查找第一个值大于等于给定值的元素
+     *
+     * @param array 目标数组
+     * @param n     数组大小
+     * @param value 要查找的值
+     * @return 目标元素所在位置
+     */
+    public static int searchFirstEqualOrLagger(int[] array, int n, int value){
+        int low = 0;
+        int high = n - 1;
+
+        while(low <= high){
+            int middle = low + ((high - low) >> 2);
+
+            if(array[middle] >= value){
+                if(middle == 0 || array[middle - 1] < value){
+                    return middle;
+                } else {
+                    high = middle - 1;
+                }
+            } else {
+                low = middle + 1;
+            }
+        }
+
+        return -1;
+    }
+```
+
+##### 3.7.1.4 查找最后一个值小于等于给定值的元素
+
+```java
+/**
+     * 查找最后一个值小于等于给定值的元素
+     *
+     * @param array 目标数组
+     * @param n     数组大小
+     * @param value 要查找的值
+     * @return 目标元素所在位置
+     */
+    public static int searchLastEqualOrLower(int[] array, int n, int value){
+        int low = 0;
+        int high = n - 1;
+
+        while(low <= high){
+            int middle = low + ((high - low) >> 2);
+
+            if(array[middle] <= value){
+                if(middle == n - 1 || array[middle + 1] > value){
+                    return middle;
+                } else {
+                    low = middle + 1;
+                }
+            } else {
+                high = middle - 1;
+            }
+        }
+
+        return -1;
+    }
+```
+
