@@ -1620,7 +1620,23 @@ public class QuickSort {
 
 * 空间复杂度
   原地排序，**O(1)** , 因为核心的确定分区点位置直接数组内遍历交换并未申请临时数组空间。
-    
+  
+#### 3.6.8 线性排序
+##### 3.6.8.1 桶排序
+* 排序思想
+将要排序的数据分到几个有序桶之中，每个桶内部再单独排序，这样最后所有桶依次取出元素就是有序的。例如元素 5 12 9 3 17 15 13 ，我们可以放到两个桶中，[1,10]区间、[11,20]区间，就是[5,9,3]、[12,17,15,13],那么第二个区间数肯定是大于第一个区间的，两个区间单独排序后再串起来就是有序的了。
+
+* 时间复杂度
+O(n)
+
+* 优缺点
+优点：桶排序时间复杂度效率高；适合用在外部排序（数据存在外部磁盘，即数据量大的场景）；
+缺点：对数据要求高，正常要求数据分到不同的桶数据需要相对平均，但是如果划分后有些桶很多、有些很少，极端情况下都放到一个桶了，那么就退化成桶里单排序了，如果采用快排，时间复杂度一般来说就是O(nlogn)了。
+
+##### 3.6.8.2 计数排序
+
+##### 3.6.8.2 基数排序
+
 #### 3.6.10 排序算法总结
 
 |          | 是原地排序？ | 是否稳定？ |  最好  |  最坏  |  平均  |
@@ -1630,4 +1646,92 @@ public class QuickSort {
 | 选择排序 |      是      |     否     | O(n^2) | O(n^2) | O(n^2) |
 | 归并排序 |      否      |     是     | O(nlogn) | O(nlogn) | O(nlogn) |
 | 快速排序 |      是      |     否     | O(nlogn) | O(n^2) | O(nlogn) |
+
+### 3.7 查找
+
+#### 3.7.1 二分查找（Binary Search）
+
+##### 3.7.1.1 基本思想
+
+针对有序区间，针对目标元素，动态缩小区间匹配，每次折半区间。
+
+##### 3.7.1.2 算法实现
+
+* 循环法
+
+  ```java
+   /**
+       * 循环查找算法
+       *
+       * @param array 目标数组
+       * @param n     数组大小
+       * @param value 要查找的值
+       * @return 目标元素所在位置
+       */
+      public static int circleSearch(int[] array, int n, int value){
+          // 基本异常判断
+  
+          int low = 0;
+          int high = n - 1;
+  
+          while(low <= high){
+  //            int middle = (low + high) / 2;
+  //            int middle = low + (high - low) / 2;
+              int middle = low + ((high - low) >> 2);
+  
+              if(array[middle] == value){
+                  return middle;
+              } else if(array[middle] > value){
+                  high = middle - 1;
+              } else {
+                  low = middle + 1;
+              }
+          }
+  
+          return -1;
+      }
+  ```
+
+* 递归法
+
+  ```java
+  /**
+       * 递归查找算法
+       *
+       * @param array 目标数组
+       * @param start 查找区间开始位置
+       * @param end 查找区间结束位置
+       * @param value 要查找的值
+       * @return 目标元素所在位置
+       */
+      public static int recursionSearch(int[] array, int start, int end,  int value){
+          int middle = start + ((end - start) >> 2);
+  
+          if(array[middle] == value){
+              return middle;
+          } else if(array[middle] > value){
+              return recursionSearch(array, start, middle - 1, value);
+          } else {
+              return recursionSearch(array, middle + 1, end, value);
+          }
+      }
+  ```
+
+##### 3.7.1.3 算法分析
+* 时间复杂度 **O(logn)**
+  假设总数量n，每次对半后需要查找的区间大小依次为 n/2、n/4...n/(2^k), 即k次折半后的查找区间大小为n/(2^k)，当区间大小只为1的时候肯定能确定最终元素是否能找到，即n/(2^k) = 1时候，k为最多查找次数，计算k=logn,即时间复杂度为O(logn)。
+
+* 局限性：
+
+  A. 依赖数组这样的顺序表结构；
+
+  B. 需要数组有序；
+
+  C. 数据量太小的话可以直接顺序查找，当然如果数据比较比较耗时，还是二分查找降低比较次数；
+
+  数据量太大的话不适合二分查找，因为依赖数组结构，需要连续的大的内存空间；
+
+  D. 适用于静态的不太经常变的数据，较少的排序，多次查找；而经常变的数据需要经常排序消耗时间；
+
+  
 
