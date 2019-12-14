@@ -101,11 +101,50 @@ public class SkipList {
             preNodes[currentLevel] = current;
         }
 
-        // 在每一层插入目标节点
+        // 在每一层插入目标节点（当然也可以在循环内部每一层找到前置节点的时候插入）
         for(int i = 0; i < level; i++){
             newNode.nextNodes[i] = preNodes[i].nextNodes[i];
             preNodes[i].nextNodes[i] = newNode;
         }
+    }
+
+    /**
+     * 删除目标元素值节点
+     * @param value 目标节点值
+     */
+    public void delete(int value){
+        // 要删除的话还是找到在每一层的所有前置节点
+        Node[] preNodes = new Node[realLevel];
+
+        Node current = head;
+        for(int currentLevel = realLevel; currentLevel >= 0; currentLevel--){
+            while (null != current.nextNodes[currentLevel] && current.nextNodes[currentLevel].data < value){
+                current = current.nextNodes[currentLevel];
+            }
+
+            preNodes[currentLevel] = current;
+        }
+
+        // 从最顶层开始删除即可，即每一层都是单链表节点的删除
+//        for(int i = realLevel - 1; i >= 0; i--){
+//            if(null != preNodes[i].nextNodes[i] && value == preNodes[i].nextNodes[i].data){
+//                preNodes[i].nextNodes[i] = preNodes[i].nextNodes[i].nextNodes[i];
+//            }
+//        }
+
+        // 优化一下
+        if(null == preNodes[0].nextNodes || value != preNodes[0].nextNodes[0].data){
+            // 即如果目标值不存在链表中即不用执行删除操作，而不存在情况一个是最后链表节点后面、二个某两个节点之间
+            return;
+        }
+
+        for(int i = realLevel - 1; i >= 0; i--){
+            // 即使目标值元素存在依然需要在每一层判断是否存在，因为不一定在每一层都建立了索引节点
+            if(null != preNodes[i].nextNodes[i] && value == preNodes[i].nextNodes[i].data){
+                preNodes[i].nextNodes[i] = preNodes[i].nextNodes[i].nextNodes[i];
+            }
+        }
+
     }
 
     /**
