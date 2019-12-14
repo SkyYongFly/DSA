@@ -1,5 +1,7 @@
 package com.skylaker.skipList;
 
+import org.junit.jupiter.api.Test;
+
 import javax.management.MXBean;
 import java.util.Random;
 
@@ -19,7 +21,7 @@ public class SkipList {
     private Node head = new Node(-1, MAX_LEVEL);
 
     // 随机算法，用于生成层高数
-    private Random random = new Random(100);
+    private Random random = new Random(MAX_LEVEL);
 
 
     /**
@@ -93,7 +95,7 @@ public class SkipList {
 
         //找到目标节点各个层的前置节点
         Node current = head;
-        for(int currentLevel = level; currentLevel >= 0; currentLevel--){
+        for(int currentLevel = level - 1; currentLevel >= 0; currentLevel--){
             while (null != current.nextNodes[currentLevel] && current.nextNodes[currentLevel].data < value){
                 current = current.nextNodes[currentLevel];
             }
@@ -109,6 +111,22 @@ public class SkipList {
     }
 
     /**
+     * 获取随机层数，该算法可根据实际情况合适选取
+     * @return
+     */
+    private int getRandomLevel(){
+        int level = 1;
+
+        for(int i = 0; i < realLevel; i++){
+            if(random.nextInt() % 2 == 0){
+                level++;
+            }
+        }
+
+        return level;
+    }
+
+    /**
      * 删除目标元素值节点
      * @param value 目标节点值
      */
@@ -117,7 +135,7 @@ public class SkipList {
         Node[] preNodes = new Node[realLevel];
 
         Node current = head;
-        for(int currentLevel = realLevel; currentLevel >= 0; currentLevel--){
+        for(int currentLevel = realLevel - 1; currentLevel >= 0; currentLevel--){
             while (null != current.nextNodes[currentLevel] && current.nextNodes[currentLevel].data < value){
                 current = current.nextNodes[currentLevel];
             }
@@ -148,20 +166,18 @@ public class SkipList {
     }
 
     /**
-     * 获取随机层数，在最大层高限制内取一值
-     * @return
+     * 打印所有跳表节点
      */
-    private int getRandomLevel(){
-        int level = 1;
-
-        for(int i = 0; i < MAX_LEVEL; i++){
-            if(random.nextInt() / 2 == 0){
-                level++;
+    public void printAllSkipListNodes(){
+        for(int l = realLevel - 1; l >= 0; l--){
+            Node current = head;
+            while (null != current.nextNodes[l]){
+                System.out.print(current.nextNodes[l].data + " --- ");
+                current = current.nextNodes[l];
             }
+            System.out.println();
         }
-        return level;
     }
-
 
     /**
      * 跳表节点定义
@@ -192,5 +208,24 @@ public class SkipList {
             // 当前节点值在每一层其实都是一样的，只是后继节点是不一样的，而后继节点元素数量正是层高
             this.nextNodes = new Node[level];
         }
+    }
+
+    @Test
+    public void test(){
+        SkipList skipList = new SkipList();
+        skipList.insert(2);
+        skipList.insert(8);
+        skipList.insert(16);
+        skipList.insert(23);
+        skipList.insert(37);
+        skipList.insert(59);
+
+        skipList.printAllSkipListNodes();
+
+        skipList.delete(23);
+        skipList.printAllSkipListNodes();
+
+        Node node = skipList.search(116);
+        System.out.println(node != null);
     }
 }
