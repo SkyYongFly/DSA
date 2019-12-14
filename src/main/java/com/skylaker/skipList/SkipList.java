@@ -1,5 +1,8 @@
 package com.skylaker.skipList;
 
+import javax.management.MXBean;
+import java.util.Random;
+
 /**
  * 跳表实现 (原链表为单链表，且存储元素值为自然数)
  * @author skylaker
@@ -13,7 +16,11 @@ public class SkipList {
     private int realLevel = 0;
 
     // 头节点，虚拟的哨兵节点，为了方便后续遍历，直接高度设置为最大层高（如果设置尾节点的话，也是同样如此）
-    private Node head = new Node(MAX_LEVEL);
+    private Node head = new Node(-1, MAX_LEVEL);
+
+    // 随机算法，用于生成层高数
+    private Random random = new Random(100);
+
 
     /**
      * 查找跳表中是否存在指定元素值的节点
@@ -58,6 +65,66 @@ public class SkipList {
 
 
     /**
+     * 插入元素
+     * @param value 新增元素值
+     */
+    public void insert(int value){
+        // 首先获取新增节点占用几层，即原链表本身节点+索引层节点
+        // 采用随机算法，确保得到的层数在最大层限制之内
+        // 当时需要考虑一种特殊情况，即初始跳表为空，这个时候新增的元素为第一个元素，无需建立索引层
+        int level = null == head.nextNodes[0] ? 1 : getRandomLevel();
+
+        if(level > realLevel){
+            // 如果超过当前层高，只设置层高为实际层高+1 ，避免单个节点过分高，影响查找效率
+            level = ++realLevel;
+        }
+
+        // 例如当前层高 10， 计算得到的层高为 6 ，那么层高就是 6 ；但是如果计算出来是 20，则层高设置为 21；
+
+        // 新建节点
+        Node newNode = new Node(value, level);
+
+        // 新建节点的所有前置节点值数组，因为单链表的插入需要找到前驱节点，需要这里需要找到目标节点各个层的前置节点
+        Node[] preNodes = new Node[level];
+        for(int i = 0; i < level; i++){
+            // 初始前置节点都设置为头节点
+            preNodes[i] = head;
+        }
+
+        //找到目标节点各个层的前置节点
+        Node current = head;
+        for(int currentLevel = level; currentLevel >= 0; currentLevel--){
+            while (null != current.nextNodes[currentLevel] && current.nextNodes[currentLevel].data < value){
+                current = current.nextNodes[currentLevel];
+            }
+
+            preNodes[currentLevel] = current;
+        }
+
+        // 在每一层插入目标节点
+        for(int i = 0; i < level; i++){
+            newNode.nextNodes[i] = preNodes[i].nextNodes[i];
+            preNodes[i].nextNodes[i] = newNode;
+        }
+    }
+
+    /**
+     * 获取随机层数，在最大层高限制内取一值
+     * @return
+     */
+    private int getRandomLevel(){
+        int level = 1;
+
+        for(int i = 0; i < MAX_LEVEL; i++){
+            if(random.nextInt() / 2 == 0){
+                level++;
+            }
+        }
+        return level;
+    }
+
+
+    /**
      * 跳表节点定义
      * 这里的节点并不仅仅是普通链表中的节点概念，而是代表节点在整个跳表中的所有位置集合，
      * 即包括当前节点值以及所有后继节点索引
@@ -67,7 +134,7 @@ public class SkipList {
         private int data = -1;
 
         // 代表当前节点的所有后继节点索引
-        // nextNodes[0]代表当前节点在第1层的后继节点
+        // nextNodes[0]代表当前节点在第1层的后继节点指针
         // 数组大小即为当前节点最大高度
         private Node[] nextNodes;
 
@@ -77,11 +144,14 @@ public class SkipList {
 
         /**
          * 构造一个level层高的节点元素，其实指定多高即代表当前元素在哪几层存在
+         * @param data 节点值
          * @param level 层高
          */
-        public Node(int level){
+        public Node(int data, int level){
+            this.data = data;
+
             // 当前节点值在每一层其实都是一样的，只是后继节点是不一样的，而后继节点元素数量正是层高
-            nextNodes = new Node[level];
+            this.nextNodes = new Node[level];
         }
     }
 }
