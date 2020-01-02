@@ -2527,9 +2527,72 @@ Hash Table , 称为哈希表或者Hash表。利用数组支持下标**随机访�
 
 ![1577974015508](README.assets/1577974015508.png)
 
+```java
+	/**
+     * 查找指定值的节点（默认无重复元素）
+     * @param data 目标节点值
+     * @return {Node} 目标节点
+     */
+    public Node findNode(int data){
+        // 查找游标节点
+        Node p = root;
+        while (null != p){
+            if(data < p.data) {
+                p = p.left;
+            } else if(data > p.data){
+                p = p.right;
+            } else {
+                return p;
+            }
+        }
+        return null;
+    }
+```
+
 
 
 ##### 3.11.3.4 插入操作
+
+这里默认插入叶子节点。
+
+类似查找操作，主要找到合适位置。从根节点开始，小于在左子树找，一直找到左节点为空的节点，作为左子节点插入；同理大于则在右子树查找右子节点为空的节点，作为右子节点插入。
+
+![1577975248100](README.assets/1577975248100.png)
+
+```java
+	/**
+     * 插入指定值的节点
+     * @param data 目标节点值
+     */
+    public void insertNode(int data){
+        if(null == root){
+            root = new Node(data);
+            return;
+        }
+
+        // 查找游标节点
+        Node p = root;
+        while (null != p){
+            if(data < p.data) {
+                if(null == p.left){
+                    Node node = new Node(data);
+                    p.left = node;
+                    return;
+                }
+                p = p.left;
+            } else {
+                if(null == p.right){
+                    Node node = new Node(data);
+                    p.right = node;
+                    return;
+                }
+                p = p.right;
+            }
+        }
+    }
+```
+
+
 
 ##### 3.11.3.5 删除操作
 

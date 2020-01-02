@@ -12,7 +12,7 @@ public class BinaryTree {
      * 前序遍历
      * @param root
      */
-    public void preOrder(Node root){
+    public static void preOrder(Node root){
         if(null == root) {
             return;
         }
@@ -26,7 +26,7 @@ public class BinaryTree {
      * 中序遍历
      * @param root
      */
-    public void inOrder(Node root){
+    public static void inOrder(Node root){
         if(null == root) {
             return;
         }
@@ -40,7 +40,7 @@ public class BinaryTree {
      * 后序遍历
      * @param root
      */
-    public void postOrder(Node root){
+    public static void postOrder(Node root){
         if(null == root) {
             return;
         }
