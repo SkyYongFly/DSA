@@ -90,8 +90,11 @@ public class BinarySearchTree {
 
         // 对有两个子节点的节点先进行处理
         if(null != p.left && null != p.right){
-            // 从右子树中查找最小值的节点
+            // m节点缓存待删除节点
             Node m = p;
+
+            // 从右子树中查找最小值的节点
+            pp = p;
             p = p.right;
             while(null != p.left){
                 pp = p;
@@ -120,6 +123,40 @@ public class BinarySearchTree {
         } else if(pp.right == p){
             pp.right = child;
         }
+    }
+
+    /**
+     * 查找最大值节点
+     * @return
+     */
+    public Node findMaxNode(){
+        // 最大值节点肯定是最右侧那个节点
+        if(null == root){
+            return null;
+        }
+
+        Node p = root;
+        while (null != p.right){
+            p = p.right;
+        }
+        return p;
+    }
+
+    /**
+     * 查找最小值节点
+     * @return
+     */
+    public Node findMinNode(){
+        // 最大值节点肯定是最左侧那个节点
+        if(null == root){
+            return null;
+        }
+
+        Node p = root;
+        while (null != p.left){
+            p = p.left;
+        }
+        return p;
     }
 
     /**
@@ -213,6 +250,9 @@ public class BinarySearchTree {
         node4.right = node7;
         node6.left = node8;
         node6.right = node9;
+
+        System.out.println("最大值节点：" + findMaxNode());
+        System.out.println("最小值节点：" + findMinNode());
 
         inOrder(root);
         System.out.println();
