@@ -2605,9 +2605,71 @@ Hash Table , 称为哈希表或者Hash表。利用数组支持下标**随机访�
 
 具体代码实现的时候我们可以按照这三种情况分别考虑实现，但是我们可以优化下逻辑，**其实对于第三种情况，从右子树查找最小值节点替换到被删除位置后，对于原来位置的删除肯定是第一种或者第二种情况，因为如果该位置，例如图中23存在左子节点，那么整个右子树的最小值肯定不是23，因此23要么没有子节点要么只有右子节点。所以我们可以把情况三先实现替换值步骤，然后最后三种情况就合并变成了只有两种情况了：要么只有一个子节点（左或者右），要么没有子节点**。
 
+```java
+/**
+     * 删除指定值的节点
+     * @param data 目标节点值
+     */
+    public void deleteNode(int data){
+        // 首先查找节点
+        /// p代表当前查找节点位置，最终为要删除的节点
+        /// pp代表p节点的父节点
+        Node p = root;
+        Node pp = null;
+        while (null != p){
+            if(data == p.data){
+                break;
+            } else if(data < p.data){
+                pp = p;
+                p = p.left;
+            } else {
+                pp = p;
+                p = p.right;
+            }
+        }
 
+        if(null == p){
+            System.out.println("未找到指定值的树节点");
+            return;
+        }
 
+        // 对有两个子节点的节点先进行处理
+        if(null != p.left && null != p.right){
+            // 从右子树中查找最小值的节点
+            Node m = p;
+            p = p.right;
+            while(null != p.left){
+                pp = p;
+                p = p.left;
+            }
+            m.data = p.data;
+        }
+
+        // 最终的p节点只有一个节点或者没有子节点
+        // 找出子节点的子节点
+        Node child ;
+        if(null != p.left){
+            child = p.left;
+        } else if(null != p.right){
+            child = p.right;
+        } else {
+            child = null;
+        }
+
+        // 删除最终节点
+        if(null == pp){
+            // 树只有一个根节点且删除的就是根节点
+            p = null;
+        } else if(pp.left == p){
+            pp.left = child;
+        } else if(pp.right == p){
+            pp.right = child;
+        }
+    }
+```
 ##### 3.11.3.6 查找最大节点
+最大节点必然是最右侧节点
+
 
 ##### 3.11.3.7 查找最小节点
 

@@ -62,6 +62,67 @@ public class BinarySearchTree {
     }
 
     /**
+     * 删除指定值的节点
+     * @param data 目标节点值
+     */
+    public void deleteNode(int data){
+        // 首先查找节点
+        /// p代表当前查找节点位置，最终为要删除的节点
+        /// pp代表p节点的父节点
+        Node p = root;
+        Node pp = null;
+        while (null != p){
+            if(data == p.data){
+                break;
+            } else if(data < p.data){
+                pp = p;
+                p = p.left;
+            } else {
+                pp = p;
+                p = p.right;
+            }
+        }
+
+        if(null == p){
+            System.out.println("未找到指定值的树节点");
+            return;
+        }
+
+        // 对有两个子节点的节点先进行处理
+        if(null != p.left && null != p.right){
+            // 从右子树中查找最小值的节点
+            Node m = p;
+            p = p.right;
+            while(null != p.left){
+                pp = p;
+                p = p.left;
+            }
+            m.data = p.data;
+        }
+
+        // 最终的p节点只有一个节点或者没有子节点
+        // 找出子节点的子节点
+        Node child ;
+        if(null != p.left){
+            child = p.left;
+        } else if(null != p.right){
+            child = p.right;
+        } else {
+            child = null;
+        }
+
+        // 删除最终节点
+        if(null == pp){
+            // 树只有一个根节点且删除的就是根节点
+            p = null;
+        } else if(pp.left == p){
+            pp.left = child;
+        } else if(pp.right == p){
+            pp.right = child;
+        }
+    }
+
+    /**
      * 树节点
      */
     public class Node {
@@ -134,7 +195,6 @@ public class BinarySearchTree {
         //    5    11       21
         //      \          /  \
         //       7      18    25
-        
         root = new Node(13);
         Node node2 = new Node(10);
         Node node3 = new Node(15);
@@ -143,7 +203,7 @@ public class BinarySearchTree {
         Node node6 = new Node(21);
         Node node7 = new Node(7);
         Node node8 = new Node(18);
-        Node node9 = new Node(15);
+        Node node9 = new Node(25);
 
         root.left = node2;
         root.right = node3;
@@ -154,11 +214,33 @@ public class BinarySearchTree {
         node6.left = node8;
         node6.right = node9;
 
+        inOrder(root);
+        System.out.println();
+
         System.out.println(findNode(18));
         System.out.println(findNode(21));
         System.out.println(findNode(5));
 
         insertNode(12);
+        //            13
+        //          /   \
+        //       10      15
+        //      /  \      \
+        //    5    11       21
+        //      \    \      /  \
+        //       7    12  18    25
+        inOrder(root);
+
+        System.out.println();
+
+        deleteNode(10);
+        //            13
+        //          /   \
+        //       11      15
+        //      /  \      \
+        //    5     12      21
+        //      \          /  \
+        //       7      18    25
         inOrder(root);
     }
 }
