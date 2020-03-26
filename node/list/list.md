@@ -144,4 +144,5 @@ Talk is cheap, show me your code !
 
 见代码目录：
 
-[https://github.com/SkyYongFly/DSA/tree/master/src/main/java/com/skylaker/linkedlist](
+[https://github.com/SkyYongFly/DSA/blob/master/src/main/java/com/skylaker/linkedlist/SinglyLinkedList.java](https://github.com/SkyYongFly/DSA/blob/master/src/main/java/com/skylaker/linkedlist/SinglyLinkedList.java)
+
