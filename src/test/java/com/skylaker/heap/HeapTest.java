@@ -4,21 +4,25 @@ import org.junit.jupiter.api.Test;
 
 /**
  * @author skylaker
- * @version V1.0 2020/1/9 22:53
+ * @version V1.0 2020/4/2 22:30
  */
 public class HeapTest {
     @Test
-    public void test(){
-        Heap heap = new Heap(20);
-        int[] nums = {33,27,21,16,13,15,9,5,6,7,8,1,2};
-        for(int i = 0; i < 13 ; i++){
-            heap.setNode(nums[i], i+1);
-        }
-        heap.setMax(20);
-        heap.setN(13);
+    public void testHeapSort(){
+        int[] arr = {23,15,16,2,25,31,3,11,8};
+        Heap heap = new Heap(1);
+        heap.heapSort(arr);
+        heap.print(arr);
+    }
 
-        // 输出插入元素堆化后的大顶堆
-        heap.insert(22);
+    @Test
+    public void testDeleteMax(){
+        int[] arr = {31, 25, 23, 11, 15, 16, 3, 2, 8};
+        Heap heap = new Heap(9);
+        for(int a : arr){
+            heap.insert(a);
+        }
+        heap.deleteMax();
         heap.print();
     }
 }
