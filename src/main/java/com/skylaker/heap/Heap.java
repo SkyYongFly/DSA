@@ -150,7 +150,7 @@ public class Heap {
     }
 
     /**
-     * 堆化（从上往下）
+     * 大顶堆 堆化（从上往下）
      * @param a 目标数组 （元素从索引0开始）
      * @param length  数组长度
      * @param i 当前开始堆化的元素位置
@@ -182,6 +182,109 @@ public class Heap {
             }
         }
     }
+
+    /**
+     * 将数组建成小顶堆
+     * @param a 目标数组
+     */
+    public void heapMin(int[] a){
+        if (null == a || 0 == a.length) {
+            return;
+        }
+
+        int length = a.length;
+
+        // 将数组映射成完全二叉树，从非叶子元素开始堆化（因为叶子节点没有子元素，自然也没有比较的对象）
+        for(int i = (length - 2) / 2; i >= 0; i--){
+            heapifyMin(a, length, i);
+        }
+    }
+
+    /**
+     * 将数组前K个元素建成小顶堆
+     * @param a 目标数组
+     * @param k 前K个元素
+     */
+    public void heapMin(int[] a, int k){
+        if (null == a || 0 == a.length) {
+            return;
+        }
+
+        // 将数组映射成完全二叉树，从非叶子元素开始堆化（因为叶子节点没有子元素，自然也没有比较的对象）
+        for(int i = (k - 2) / 2; i >= 0; i--){
+            heapifyMin(a, k, i);
+        }
+    }
+
+    /**
+     * 小顶堆 从上往下堆化
+     * @param a 数组
+     * @param length 数组长度
+     * @param i 开始堆化位置
+     */
+    private void heapifyMin(int[] a, int length, int i) {
+        while (true) {
+            // 找出当前节点和左右子节点中最小的那个元素
+            int min = i;
+
+            if((i*2+1 < length) && (a[min] > a[i*2 + 1])){
+                min = i*2+1;
+            }
+
+            if((i*2+2 < length) && (a[min] > a[i*2 + 2])){
+                min = i*2 + 2;
+            }
+
+            if(min == i){
+                // 如果最小的节点就是当前节点，那么比较结束
+                break;
+            } else {
+                // 需要交换父节点和 左、右中最小的节点
+                int temp = a[i];
+                a[i] = a[min];
+                a[min] = temp;
+
+                i = min;
+            }
+        }
+    }
+
+    /**
+     * 求数组中前K大元素
+     * @param a 目标数组
+     * @param k 前K大范围
+     * @return 前K大元素数组
+     */
+    public int[] getTopK(int[] a, int k){
+        if(null == a || k > a.length || k < 1){
+            return null;
+        }
+
+        // 数组前K个元素建成小顶堆
+        heapMin(a, k);
+
+        // 数组第K+1个元素开始遍历和顶堆堆顶元素比较，大则替换堆顶元素
+        for(int i = k; i < a.length; i++){
+            if(a[i] > a[0]){
+                // a[0] 就是小顶堆堆顶元素
+                // 元素比小顶堆堆顶元素大则替换小顶堆堆顶元素
+                int temp = a[0];
+                a[0] = a[i];
+                a[i] = temp;
+
+                // 堆化堆顶元素，保持还是小顶堆
+                heapifyMin(a, k, 0);
+            }
+        }
+
+        // 小顶堆中元素即数组前K个元素就是最大的K个元素
+        int[] res = new int[k];
+        for(int i = 0; i < k; i++){
+            res[i] = a[i];
+        }
+        return res;
+    }
+
 
     /**
      * 打印输出

@@ -25,4 +25,23 @@ public class HeapTest {
         heap.deleteMax();
         heap.print();
     }
+
+    @Test
+    public void testTopK(){
+        int[] arr = {31, 8, 23, 1, 15, 3, 16, 2, 25};
+        Heap heap = new Heap(0);
+        int[] res = heap.getTopK(arr, 5);
+        for(int a : res){
+            System.out.print(a + " ");
+        }
+
+        System.out.println();
+
+        int[] arr2 = {8, 2, 5, 3, 1, 6, 9, 4, 7};
+        Heap heap2 = new Heap(0);
+        int[] res2 = heap.getTopK(arr2, 5);
+        for(int a : res2){
+            System.out.print(a + " ");
+        }
+    }
 }
