@@ -56,3 +56,62 @@
 * 邻接表存储起来比较节省空间，但是使用起来就比较耗时间；比如查找2是否有到4的边，需要遍历2对应的链表，而邻接矩阵的话直接查看 `A[2][4]` 位置对应的值；
 
 * 邻接表链表过长可以优化，将链表改成平衡二叉查找树，实际开发中，我们可以选择用红黑树；
+
+#### 3 图的代码实现
+
+无向图的邻接表实现：
+
+```java
+package com.skylaker.graph;
+
+import java.util.LinkedList;
+
+/**
+ * 图 （无向图）
+ */
+public class Graph {
+    // 顶点的个数
+    private int v;
+
+    // 用邻接表存储（链表数组）
+    // 每个顶点对应到对应索引位置，节点中的链表保存与当前节点相连的顶点
+    private LinkedList<Integer>[] adj;
+
+
+    public Graph(int v){
+        this.v = v;
+
+        adj = new LinkedList[v];
+        for(int i = 0; i < v; i++){
+            adj[i] = new LinkedList<>();
+        }
+    }
+
+    /**
+     * 存储两个顶点之间的边关系
+     * @param s 顶点s
+     * @param t 顶点t
+     */
+    public void addEdge(int s, int t){
+        // 无向图两个顶点之间的关系是同时存在的，所以两个顶点要同时保存对应的边关系
+        adj[s].add(t);
+        adj[t].add(s);
+    }
+}
+```
+
+#### 4 图的搜索
+
+##### 4.1 图的搜索算法
+
+​	在图中找出从一个顶点出发，到另一个顶点的路径；
+
+##### 4.2 广度优先搜索（Breadth-First-Search）
+
+* 广度优先搜索（Breadth-First-Search），简称为 **BFS**。直观地讲；
+
+* 其实就是一种**一层层推进**的搜索策略，即先查找离起始顶点最近的，然后是次近的，依次往外搜索；
+
+* 如下图，S 到 T 广度优先搜索，我们搜索一条从 s 到 t 的路径，实际上，这样求得的路径就是从 s 到 t 的最短路径。
+
+  <img src="images.assets/1586622067706.png" alt="1586622067706" style="zoom:80%;" />
