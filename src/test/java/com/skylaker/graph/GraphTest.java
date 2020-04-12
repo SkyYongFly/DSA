@@ -30,6 +30,8 @@ public class GraphTest {
         graph.addEdge(7, 5);
         graph.addEdge(7, 6);
 
-        graph.bfs(0,7);
+        graph.bfs(0,6);
+        System.out.println();
+        graph.dfs(0,6);
     }
 }

@@ -200,5 +200,93 @@ public class Graph {
 
 ##### 4.3 深度优先搜索（DFS）
 
+* 利用递归从起始顶点开始，依次往后找，递归调用关联的顶点，直到找到目标顶点；类似走迷宫，先选择一条路走，有路走则往前，否则回退，比如下面这图，1先到2, 2到5，5到4， 4 到1，发现1已经走过，那就回退到5, 走其他边……
 
+  <img src="images.assets/1586679029358.png" alt="1586679029358" style="zoom:80%;" />
 
+* 代码实现
+
+  ```java
+  	/**
+       * 图的深度优先搜索 （核心思想：一条路往前走，不通则回退重走，递归实现）
+       * @param s 起点
+       * @param t 终点
+       */
+      public void dfs(int s, int t){
+          if(t <= s){
+              return;
+          }
+  
+          // 标识对应索引顶点是否已经访问
+          boolean[] visited = new boolean[v];
+          visited[s] = true;
+  
+          // 数组每个索引位置表示对应顶点的前一个顶点，比如顶点3的前一个顶点是4，那么 prev[3]=4
+          // 每个节点的前驱节点可能有多个，这里只存储遍历到的第一个
+          int[] prev = new int[v];
+          for(int i = 0; i < v; i++){
+              prev[i] = -1;
+          }
+  
+          recurDfs(s, t, visited, prev);
+          print(prev, s, t);
+      }
+  
+      /**
+       * 递归深度优先搜索
+       * @param s 当前起点
+       * @param t 终点
+       * @param visited 顶点已访问标识数组
+       * @param prev 顶点前驱顶点数组
+       */
+      public void recurDfs(int s, int t, boolean[] visited, int[] prev){
+          // 找到目标顶点结束
+          if(s == t){
+              return;
+          }
+  
+          // 标识当前节点已访问
+          visited[s] = true;
+  
+          // 遍历当前顶点的关联顶点
+          for(int i = 0; i < adj[s].size(); i++){
+              int cur = adj[s].get(i);
+              if(!visited[cur]){
+                  prev[cur] = s;
+                  recurDfs(cur, t, visited, prev);
+              }
+          }
+      }
+      
+      /**
+       * 打印顶点s到t的路径（递归打印，打印s到t的路径，那么就是s到t的上一个顶点加上打印t顶点）
+       * @param prev 记录顶点前驱顶点的数组
+       * @param s 起点
+       * @param t 终点
+       */
+      public void print(int[] prev, int s, int t){
+          if(-1 != prev[t] && s != t){
+              print(prev, s, prev[t]);
+          }
+  
+          System.out.printf(t + " ");
+      }
+  ```
+
+* 实际测试
+
+  <img src="images.assets/1586680097647.png" alt="1586680097647" style="zoom:80%;" />
+
+ 广度优先搜索打印路径：0 1 4 6  ；
+
+ 深度优先搜索打印路径：0 1 2 5 7 6 ；
+
+ 深度优先的路径并不一定是最短路径
+
+* 时间复杂度
+
+  深度优先搜索算法的时间复杂度是 **O(E)**，E 表示边的个数
+
+* 空间复杂度
+
+  visited、prev 数组的大小跟顶点的个数 V 成正比，递归调用栈的最大深度不会超过顶点的个数，所以总的空间复杂度就是 **O(V)**；

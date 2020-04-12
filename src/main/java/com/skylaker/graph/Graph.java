@@ -106,4 +106,55 @@ public class Graph {
         System.out.printf(t + " ");
     }
 
+    /**
+     * 图的深度优先搜索 （核心思想：一条路往前走，不通则回退重走，递归实现）
+     * @param s 起点
+     * @param t 终点
+     */
+    public void dfs(int s, int t){
+        if(t <= s){
+            return;
+        }
+
+        // 标识对应索引顶点是否已经访问
+        boolean[] visited = new boolean[v];
+        visited[s] = true;
+
+        // 数组每个索引位置表示对应顶点的前一个顶点，比如顶点3的前一个顶点是4，那么 prev[3]=4
+        // 每个节点的前驱节点可能有多个，这里只存储遍历到的第一个
+        int[] prev = new int[v];
+        for(int i = 0; i < v; i++){
+            prev[i] = -1;
+        }
+
+        recurDfs(s, t, visited, prev);
+        print(prev, s, t);
+    }
+
+    /**
+     * 递归深度优先搜索
+     * @param s 当前起点
+     * @param t 终点
+     * @param visited 顶点已访问标识数组
+     * @param prev 顶点前驱顶点数组
+     */
+    public void recurDfs(int s, int t, boolean[] visited, int[] prev){
+        // 找到目标顶点结束
+        if(s == t){
+            return;
+        }
+
+        // 标识当前节点已访问
+        visited[s] = true;
+
+        // 遍历当前顶点的关联顶点
+        for(int i = 0; i < adj[s].size(); i++){
+            int cur = adj[s].get(i);
+            if(!visited[cur]){
+                prev[cur] = s;
+                recurDfs(cur, t, visited, prev);
+            }
+        }
+    }
+
 }
