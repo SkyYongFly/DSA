@@ -12,14 +12,32 @@ public class BMServiceTest {
 
     @Test
     public void testBmBcr(){
-        char[] z = "abgqacmqhwadva".toCharArray();
-        char[] m = "mqhwas".toCharArray();;
+        char[] z = "aaaaaaaaaaaaaaa".toCharArray();
+        char[] m = "baaaa".toCharArray();
 
-        System.out.printf(bmService.bmBcr(z, m) + "");
+//        System.out.println(bmService.bmBcr(z, m) + "");
+        System.out.println(bmService.bm(z, m) + "");
     }
 
     @Test
     public void testStr(){
         System.out.printf(String.valueOf('b' - 'a'));
+    }
+
+    @Test
+    public void testGenerateGsSuffix(){
+        char[] m = "abcabc".toCharArray();
+        int[] suffix = new int[m.length];
+        boolean[] prefix = new boolean[m.length];
+
+        bmService.generateGsSuffix(m, suffix, prefix);
+
+        for(int i = 0; i < suffix.length; i++){
+            System.out.printf(suffix[i] + " ");
+        }
+        System.out.println();
+        for(int i = 0; i < prefix.length; i++){
+            System.out.printf(prefix[i] + " ");
+        }
     }
 }
