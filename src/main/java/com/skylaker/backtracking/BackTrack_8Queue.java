@@ -1,11 +1,15 @@
 package com.skylaker.backtracking;
 
 /**
- * 回溯算法思想
+ * 回溯算法: 8皇后问题
  * @author skylaker
  * @version V1.0 2020/5/20 21:40
  */
-public class Backtracking {
+public class BackTrack_8Queue {
+    public static void main(String[] args) {
+        b8Queues();
+    }
+
     // 8皇后算法中保存元素占用位置数组
     // 下标索引代表行，对应值代表列
     private static int[] data = new int[8];
@@ -95,14 +99,4 @@ public class Backtracking {
         }
         System.out.println();
     }
-
-    public static void main(String[] args) {
-//        b8Queues();
-
-        int[] items = new int[]{15, 20, 88};
-//        f(0, 0, items, items.length, 100);
-//
-//        System.out.println(maxW);
-    }
-
 }
