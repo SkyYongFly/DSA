@@ -6,11 +6,6 @@ package com.skylaker.backtracking;
  * @version V1.0 2020/5/20 21:40
  */
 public class Backtracking {
-    public static void main(String[] args) {
-        b8Queues();
-    }
-
-
     // 8皇后算法中保存元素占用位置数组
     // 下标索引代表行，对应值代表列
     private static int[] data = new int[8];
@@ -88,7 +83,6 @@ public class Backtracking {
      * 打印8皇后元素位置
      */
     private static void printData() {
-
         for(int row = 0; row < 8; row++) {
             for(int column = 0; column < 8; column++) {
                 if(data[row] == column) {
@@ -99,5 +93,16 @@ public class Backtracking {
             }
             System.out.println();
         }
+        System.out.println();
     }
+
+    public static void main(String[] args) {
+//        b8Queues();
+
+        int[] items = new int[]{15, 20, 88};
+//        f(0, 0, items, items.length, 100);
+//
+//        System.out.println(maxW);
+    }
+
 }
