@@ -8,7 +8,7 @@ package com.skylaker.backtracking;
 public class BackTrack_0_1 {
     public static void main(String[] args) {
         // 测试物品
-        int[] arr = {20, 90, 9, 7, 2};
+        int[] arr = {20, 24, 19, 7, 12};
 
         bestWeight = 0;
         maxWeight = 100;

@@ -55,7 +55,7 @@ public class Pattern {
         char patternChar = pattern[patternIndex];
 
         // 开始挨个字符匹配
-        if('*' == patternChar ) {
+        if('*' == patternChar) {
             // 匹配任意个，即 0 个或正整数个
             // 那就先从0个开始匹配，即直接拿*的下个正则字符去匹配，匹配到就结束，匹配不上那么就返回，匹配 1 个的情况
             for(int k = 0; k <= str.length - strIndex; k++) {
