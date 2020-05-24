@@ -22,5 +22,5 @@
     - [分治](https://github.com/SkyYongFly/DSA/blob/master/note/idea/DivideAndConquer.md)
     - [贪心](https://github.com/SkyYongFly/DSA/blob/master/note/idea/GreedyAlgorithm.md)
     - [回溯](https://github.com/SkyYongFly/DSA/blob/master/note/idea/BacktrackingAlgorithm.md)
-    - [动态规划]()
+    - [动态规划](https://github.com/SkyYongFly/DSA/blob/master/note/idea/DynamicProgramming.md)
 
