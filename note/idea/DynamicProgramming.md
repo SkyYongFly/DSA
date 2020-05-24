@@ -340,9 +340,77 @@ public class DynamicProgramming {
         }
     ```
 
+* 状态转移方程法
+
+  * 1）先定义状态转移方程
+
+    其实在上面的状态转移表时候我们已经得到对应的关系方程：
+
+    ```java
+    最左边数字最短路径 = 上一个最左数字已有路径和 + 当前数字
+    最右边数字最短路径 = 上一个最右边数字已有路径和 + 当前数字
+    如果是中间数字，那么 最短路径 = 上一层相连的两个数字中的最短一个路径 + 当前数字
+    ```
+
+  * 2）转换为代码
+
+    ```java
+    /**
+     * 利用状态转移方程求解
+     * @param triangle “杨辉三角”对应的二维数组，一维代表每一层，二维代表每一行数字
+     * @return 最高层到最底层的最短路径
+     */
+    public static int stateTransferEquation(int[][] triangle){
+    	int min = Integer.MAX_VALUE;
     
+    	// 求最后一层的数字每个的最短路径，从中选最小值
+    	// 最后一层往前迭代
+    	for(int i = 0; i < triangle[triangle.length - 1].length; i++) {
+    		int dst = stf(triangle, triangle.length - 1, i);
+    		if(dst < min) {
+    			min = dst;
+    		}
+    	}
+    
+    	return min;
+    }
+    
+    /**
+     * 求指定数字对应的最短路径
+     * @param triangle “杨辉三角”对应的二维数组，一维代表每一层，二维代表每一行数字
+     * @param c 层数
+     * @param k 指定层第几个（k+1）数字
+     * @return 当前数字最短路径
+     */
+    private static int stf(int[][] triangle, int c, int k) {
+    	// 设置终止条件
+    	if(0 == c && 0 == k) {
+    		return triangle[0][0];
+    	}
+    
+    	// 当前层最右边数字索引
+    	int rightIndex = triangle[c].length - 1;
+    
+    	// 当前数字的最短路径通过状态转移方程递归前面的数字得到
+    	if(0 == k) {
+    		// 最左边的数字最短路径就是上一个最左数字已有路径和加上当前数字
+    		return stf(triangle, c-1, 0) + triangle[c][0];
+    	}
+    	else if(k == rightIndex) {
+    		// 上一层最右边数字索引
+    		int upRightIndex = triangle[c-1].length - 1;
+    		// 最右边数字最短路径就是上一个最右边数字已有路径和加上当前数字
+    		return  stf(triangle, c-1, upRightIndex) + triangle[c][k];
+    	}
+    	else {
+    		// 如果是中间数字，那么 最短路径=上一层相连的两个数字中的最短一个路径 + 当前数字
+    		return Math.min(stf(triangle, c-1, k - 1), stf(triangle, c-1, k))
+                + triangle[c][k];
+    	}
+    }
+    ```
 
-
+    
 
 ###### 2.2.4  适合场景
 
