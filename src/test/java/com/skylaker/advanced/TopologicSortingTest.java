@@ -13,7 +13,7 @@ public class TopologicSortingTest {
         graph.addEdge(0, 3);
         graph.addEdge(1, 2);
         graph.addEdge(2, 5);
-        graph.addEdge(2, 3);
+        graph.addEdge(3, 2);
         graph.addEdge(2, 4);
         graph.addEdge(4, 3);
 
