@@ -82,4 +82,63 @@ public class GraphTopologicalSorting {
             }
         }
     }
+
+    /**
+     * 深度搜索方式遍历顶点：即从前到后遍历顶点，针对每个顶点，递归查找它依赖的每个顶点，相当于把这个顶点依赖的所有顶点倒序搜索输出
+     */
+    public void sortByDfs() {
+        // 要依次遍历顶点依赖的顶点，那么这里构建逆邻接表
+        LinkedList<Integer>[] inverseList = new LinkedList[v];
+        for(int i = 0; i < v; i++) {
+            inverseList[i] = new LinkedList<>();
+        }
+
+        for(int i = 0; i < v; i++) {
+            for(int j = 0; j < list[i].size(); j++) {
+                // 当前顶点i指向的顶点 node
+                int node = list[i].get(j);
+                // 那么对于 node 顶点来说，i 就是指向自己的顶点
+                inverseList[node].add(i);
+            }
+        }
+
+        // 顶点是否被访问过标识数组
+        boolean[] hasVisted = new boolean[v];
+
+        // 依次遍历每个顶点
+        for(int i = 0; i < v; i++) {
+            if(hasVisted[i]) {
+                continue;
+            }
+            hasVisted[i] = true;
+
+            // 先输出所依赖的顶点，即 指向当前的顶点的顶点
+            printHeadNode(i, inverseList, hasVisted);
+            // 再输出自身
+            System.out.print(" ——> " + i);
+        }
+
+    }
+
+    /**
+     * 遍历输出指定顶点依赖的顶点
+     * @param node  当前顶点
+     * @param inverseList 每个顶点逆邻接表数组
+     * @param hasVisted 顶点是否访问标识数组
+     */
+    private void printHeadNode(int node, LinkedList<Integer>[] inverseList, boolean[] hasVisted) {
+        for(int i = 0; i < inverseList[node].size(); i++) {
+            int headNode = inverseList[node].get(i);
+
+            if(hasVisted[headNode]) {
+                continue;
+            }
+            hasVisted[headNode] = true;
+
+            // 每个顶点再先遍历指向自己的顶点
+            printHeadNode(headNode, inverseList, hasVisted);
+            // 再输出自身
+            System.out.print(" ——> " + headNode);
+        }
+    }
 }
