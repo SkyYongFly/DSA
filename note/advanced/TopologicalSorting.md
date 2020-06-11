@@ -177,6 +177,95 @@
 
   要输出顶点3，那么肯定先要输出它依赖的顶点 1、2，针对顶点 1 和 2 需要再递归寻找它们依赖的顶点，1 没有，而 2 的依赖的顶点是 0 ，需要先输出 0，顶点 0 没有依赖，则递归结束。
 
+  或者最直观的情况：
+
+  <img src="images.assets/1591891024871.png" alt="1591891024871" style="zoom:80%;" />
+
+  要输出 5 顶点，那么就要先输出 4 顶点，要输出 4 顶点就要先输出 2 顶点，要输出 2 顶点，就要先输出 0 顶点，最终的输出就是： 0、2、4、5 。
+
 * 代码实现
 
-  可以构建每个顶点的逆邻接表，即每个顶点依赖的
+  可以构建每个顶点的逆邻接表，即每个顶点依赖的顶点集合数组，例如上图的逆邻接表就是：
+
+  <img src="images.assets/1591890917962.png" alt="1591890917962" style="zoom:80%;" />
+
+  按照顶点顺序依次遍历，递归查找自己的邻接链表，即先输出指向自己的顶点；
+
+  ```java
+  	/**
+       * 深度搜索方式遍历顶点：即从前到后遍历顶点，针对每个顶点，
+       * 递归查找它依赖的每个顶点，相当于把这个顶点依赖的所有顶点倒序搜索输出
+       */
+      public void sortByDfs() {
+          // 要依次遍历顶点依赖的顶点，那么这里构建逆邻接表
+          LinkedList<Integer>[] inverseList = new LinkedList[v];
+          for(int i = 0; i < v; i++) {
+              inverseList[i] = new LinkedList<>();
+          }
+  
+          for(int i = 0; i < v; i++) {
+              for(int j = 0; j < list[i].size(); j++) {
+                  // 当前顶点i指向的顶点 node
+                  int node = list[i].get(j);
+                  // 那么对于 node 顶点来说，i 就是指向自己的顶点
+                  inverseList[node].add(i);
+              }
+          }
+  
+          // 顶点是否被访问过标识数组
+          boolean[] hasVisted = new boolean[v];
+  
+          // 依次遍历每个顶点
+          for(int i = 0; i < v; i++) {
+              if(hasVisted[i]) {
+                  continue;
+              }
+              hasVisted[i] = true;
+  
+              // 先输出所依赖的顶点，即 指向当前的顶点的顶点
+              printHeadNode(i, inverseList, hasVisted);
+              // 再输出自身
+              System.out.print(" ——> " + i);
+          }
+  
+      }
+  
+      /**
+       * 遍历输出指定顶点依赖的顶点
+       * @param node  当前顶点
+       * @param inverseList 每个顶点逆邻接表数组
+       * @param hasVisted 顶点是否访问标识数组
+       */
+      private void printHeadNode(int node, 
+      							LinkedList<Integer>[] inverseList, 
+      							boolean[] hasVisted) {
+          for(int i = 0; i < inverseList[node].size(); i++) {
+              int headNode = inverseList[node].get(i);
+  
+              if(hasVisted[headNode]) {
+                  continue;
+              }
+              hasVisted[headNode] = true;
+  
+              // 每个顶点再先遍历指向自己的顶点
+              printHeadNode(headNode, inverseList, hasVisted);
+              // 再输出自身
+              System.out.print(" ——> " + headNode);
+          }
+      }
+  ```
+
+  测试，针对 Kahn 和 DFS 同时测试：
+
+可以看到两种遍历方式输出的遍历结果是不一样的，拓扑排序本身正是整体的顺序不唯一。
+
+#### 2.3 时间复杂度
+
+* Kahn 算法的时间复杂度 **O(V+E)**（V 表示顶点个数，E 表示边的个数）
+
+  每个顶点被访问了一次，每个边也都被访问了一次；
+
+* DFS 算法时间复杂度 **O(V+E)**
+
+  每个顶点被访问两次，每条边都被访问一次；
+

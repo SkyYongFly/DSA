@@ -29,7 +29,7 @@ public class TopologicSortingTest {
         graph.addEdge(2, 3);
         graph.addEdge(3, 5);
         graph.addEdge(2, 4);
-        graph.addEdge(4, 6);
+        graph.addEdge(6, 4);
 
         graph.sortByKahn();
         System.out.println();
