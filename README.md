@@ -23,4 +23,7 @@
     - [贪心](https://github.com/SkyYongFly/DSA/blob/master/note/idea/GreedyAlgorithm.md)
     - [回溯](https://github.com/SkyYongFly/DSA/blob/master/note/idea/BacktrackingAlgorithm.md)
     - [动态规划](https://github.com/SkyYongFly/DSA/blob/master/note/idea/DynamicProgramming.md)
+* 高级篇
+    - [拓扑排序](https://github.com/SkyYongFly/DSA/blob/master/note/advanced/TopologicalSorting.md)
+    - [最短路径算法](https://github.com/SkyYongFly/DSA/blob/master/note/advanced/ShortestPathAlgorithm.md)
 
